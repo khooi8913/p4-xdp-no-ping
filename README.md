@@ -11,7 +11,13 @@ Reference: https://github.com/vmware/p4c-xdp
 `p4c-xdp no_ping.p4 -o no_ping.c`
 
 ### Step 2: Generate the XDP program
-`clang -Wno-unused-value -Wno-pointer-sign -Wno-compare-distinct-pointer-types -Wno-gnu-variable-sized-type-not-at-end -Wno-tautological-compare  -O2 -emit-llvm -g -c no_ping.c -o -| llc -march=bpf -filetype=obj -o no_ping.o`
+```
+clang -Wno-unused-value -Wno-pointer-sign \
+-Wno-compare-distinct-pointer-types \
+-Wno-gnu-variable-sized-type-not-at-end \
+-Wno-tautological-compare \
+-O2 -emit-llvm -g -c no_ping.c -o -| llc -march=bpf -filetype=obj -o no_ping.o
+```
 
 > Note: You may face missing imports for `ebpf_kernel.h`, `ebpf_common.h`. As a quick fix, look for them under `~/p4c/backends/ebpf/runtime/` and make a copy to your local directory.
 

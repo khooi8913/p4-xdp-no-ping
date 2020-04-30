@@ -75,11 +75,10 @@ parser Parser(packet_in packet, out Headers hd) {
 control Ingress(inout Headers hdr, in xdp_input xin, out xdp_output xout) {
     apply {
         xout.output_port = 0;
-        //xout.output_action = hdr.ethernet.protocol != 0x800 ? xdp_action.XDP_DROP : xdp_action.XDP_PASS;
-	xout.output_action = xdp_action.XDP_PASS;
-	if (hdr.icmp.isValid()) {
-		xout.output_action = xdp_action.XDP_DROP;
-	}
+        xout.output_action = xdp_action.XDP_PASS;
+        if (hdr.icmp.isValid()) {
+            xout.output_action = xdp_action.XDP_DROP;
+        }
     }
 }
 
